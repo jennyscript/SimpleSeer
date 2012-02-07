@@ -1075,9 +1075,9 @@ h1 input:hover {
 
 
 
-/* tablet ----------- */
+ tablet ----------- 
 @media (max-width: 1024px) and (orientation: portrait) { 
-    /* Styles */
+     Styles 
     html, body {
        -webkit-text-size-adjust: none;
        -ms-text-size-adjust: none;
@@ -1107,7 +1107,7 @@ h1 input:hover {
        filter: none !important;
        -ms-filter: none !important;
     }
-    /* Black prints faster: sanbeiji.com/archives/953 */
+     Black prints faster: sanbeiji.com/archives/953 
     a, a:visited {
        color: #444 !important;
        text-decoration: underline;
@@ -1201,3 +1201,46 @@ h1 input:hover {
     z-index: 999;
 }
 
+#helpmenu {
+  float: left;
+  position: absolute;
+  height: 10px;
+  width: 10px;
+  padding: 10px;
+  padding-top: 3px;
+  padding-left: 3px;
+  padding-right: 20px;
+  padding-bottom: 20px;
+  margin: 0px;
+  -moz-box-shadow: inset rgba(0,0,0,.2) 1px 1px 0, inset rgba(0,0,0,.2) -1px -1px 0;
+  -webkit-box-shadow: inset rgba(0,0,0,.2) 1px 1px 0, inset rgba(0,0,0,.2) -1px -1px 0;
+  box-shadow: inset rgba(0,0,0,.2) 1px 1px 0, inset rgba(0,0,0,.2) -1px -1px 0;
+  text-decoration: none;
+  border: none;
+  font-weight: 700;
+  border-bottom-right-radius: 15px;
+  color: #fff !important;
+  background-color: #05C;
+  text-shadow: #000 0 -1px 0;
+  background-image: -moz-linear-gradient(top, #444, #05C);/* FF3.6 */
+  background-image: -ms-linear-gradient(top, #444, #05C); /* IE10 */
+  background-image: -o-linear-gradient(top, #444, #05C); /* Opera 11.10+ */
+  background-image: -webkit-linear-gradient(top, #444, #05C); /* Chrome 10+, Saf5.1+ */
+  background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#444), to(#05C)); /* ios, win Saf5.1+ */
+  background-image: linear-gradient(top, #444, #05C);
+  z-index: 100;
+}
+
+#helpmenu .btn {
+  position: absolute;
+}
+
+.mainlink {
+  
+}
+
+.ico.medical {
+  background: url("../img/10-medical.png") no-repeat;
+  padding: 0px;
+  margin: 0px;
+}
