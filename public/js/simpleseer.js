@@ -48,7 +48,35 @@ SimpleSeer.getJSON = function(key) {
     return $.parseJSON(SS.getValue(key));  
 };
 
+SimpleSeer.DashObject = {};
 
+SimpleSeer.DashObject.add = function(inspection, fadein){
+    if (fadein == undefined) {
+        fadein = 300;
+    }
+    $("#statebar").append(
+        $("<li/>", {
+            id: "dash_" + inspection.id,
+            class: "dashobject"
+        }).append(inspection.name).fadeIn(fadein).hoverIntent({
+            over: function(){
+                $(this).addClass("dashobject-hover");
+            }, out: function(){
+                $(this).removeClass("dashobject-hover");
+            }, timeout: 100})
+        );
+};
+
+SimpleSeer.DashObject.remove = function(inspection) {
+    
+};
+
+SimpleSeer.DashObject.refresh = function() {
+    $(".dashobject").remove();
+    for (i in SS.inspections) {
+        SS.DashObject.add(SS.inspections[i], 0);    
+    }
+};
 
 SimpleSeer.DisplayObject = {};
 
@@ -95,12 +123,12 @@ SimpleSeer.DisplayObject.addNavItem = function(id, iconcls, title, clickmethod) 
     $("#" + id).find("nav").append(
        $("<a/>", { title: title, href: "#" }).append(
             $("<b/>", { class: "ico " +iconcls })
-        ).click(clickmethod) /*.tooltip({
+        ).click(clickmethod).tooltip({
             position: "right" ,
             offset: [0, -10],
-            predelay: 400,
+            predelay: 200,
             effect: "fade"}
-        ).dynamic({right: { direction: "left" }})*/
+        ).dynamic({right: { direction: "left" }})
     );
 }
 
@@ -299,6 +327,7 @@ SimpleSeer.Frame.refresh = function() {
     SimpleSeer.histogram = SimpleSeer.getJSON('histogram_0');
    
     SS.Feature.refresh();
+    SS.DashObject.refresh();
     SS.histgraph.newHistogram();
     $(".object").remove();
     $(".tooltip").remove();
@@ -747,6 +776,9 @@ SS.inspectionhandlers = {
 //TODO - make icons bigger
 //TODO figure out why titles aren't hovering (hover() does work)
 //TODO choose relevant icons
+
+SS.radial_actions = ["region", "blob", "", ""];
+
 $("#maindisplay").prettypiemenu({
     buttons: [
         { img: "smico crop", title: "Select a Region" }, 
@@ -761,24 +793,19 @@ $("#maindisplay").prettypiemenu({
     outerPadding: 100,
     showAnimationSpeed: 250,
     closeRadius: 5,
-    onSelection: function (index) { console.log("hi " + index); },
+    onSelection: function (index) {
+        SS.action.task = SS.radial_actions[index];
+    },
     showTitles: true
 });
 
-//$(".ui-ppmenu-iconBg").hover(function(e) { console.log("hovering"); });
 
-SS.radial_actions = ["region", "blob", "", ""];
 
 
 SS.launchRadial = function() {
     //SS.action.task = "radial_select";
     SS.action.startpx = [SS.mouseX, SS.mouseY];
     $("#maindisplay").prettypiemenu("show", {top: SS.p.mouseY, left: SS.p.mouseX});
-    /* $(".ui-ppmenu-iconBg").mouseup(function(e) {
-        console.log("ppmenu icon mouseup");
-        index = parseInt($(e.target).attr("id").split("_")[3]);    
-        SS.action.task = SS.radial_actions[index];
-    }); */
 }
 
 
@@ -981,8 +1008,14 @@ SimpleSeer.setup = function() { $.getScript("/plugin_js", function(){
    
    });
 
-
+   $(".btngrp").find("a").tooltip({
+        position: "top" ,
+        offset: [0, -10],
+        predelay: 200,
+        effect: "fade"}
+    ).dynamic({right: { direction: "left" }})
    $(".ico.play").click( SS.Frame.capture );
+    
 
 
    SimpleSeer.Frame.refresh();
