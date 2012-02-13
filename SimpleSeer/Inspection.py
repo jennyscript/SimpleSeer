@@ -49,7 +49,10 @@ class Inspection(SimpleDoc):
     morphs = mongoengine.ListField()
     #list of dicts for morph operations
     #TODO validate agains morph operations
-
+    
+    def __repr__(self):
+       return "<SimpleSeer Inspection Object: %s>" % (
+            self.name) 
                                            
     def execute(self, image, parents = {}):
         """
