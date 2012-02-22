@@ -11,8 +11,8 @@
     <link href='css/orbitron.css' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/jquery.ui.ppmenu.css">
-
     <link rel="stylesheet" href="css/ui-darkness/jquery-ui-1.8.17.custom.css">
+    <link rel="stylesheet" type="text/css" href="css/sidebar.css" />
     <script src="js/modernizr2.js"></script>
     <script src="js/jquery.min.js"></script>
     <script src="js/jquery-ui.min.js"></script>
@@ -24,10 +24,18 @@
     <script src="js/processing.min.js"></script>
     <script src="js/jquery.sparkline.js"></script>
     <script src="js/underscore-min.js"></script>
-
+    <script type="text/javascript" src="js/jquery.sidebar.js"></script>
+    
     <script src="js/jquery.hoverIntent.minified.js"></script>
     
+    
 </head>
+<ul id="image_browser" class="imagebrowse">
+  <li><a href="#" ><img src="img/thumb1.png" class="passed"></a></li>
+  <li><a href="#" ><img src="img/thumb2.png" class="failed"></a></li>
+  <li><a href="#" ><img src="img/thumb3.png" class="passed"></a></li>
+  <li><a href="#" ><img src="img/thumb4.png" class="passed"></a></li>
+</ul>
 <body id="index">
 <div class="tour" id="message">
     <section><h2>This is a message</h2><a href="" class="btn tour">Next Step</a></section>
@@ -89,5 +97,20 @@
 <script type="text/javascript">
   $(".tour").hide();
   $(document).ready( SimpleSeer.setup );
+</script>
+<script type="text/javascript">
+  $("ul#image_browser").sidebar({
+      position:"right",
+      callback:{
+          item : {
+              enter : function(){
+                  $(this).find("a").animate({color:"red"}, 250);
+              },
+              leave : function(){
+                  $(this).find("a").animate({color:"white"}, 250);
+              }
+          }
+      }
+  });
 </script>
 </html>
