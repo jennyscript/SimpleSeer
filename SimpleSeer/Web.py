@@ -73,13 +73,19 @@ class WebInterface(object):
     @cherrypy.expose
     @jsonify
     def inspection_preview(self, **params):        
-        insp = Inspection(
+        insp_params = dict(
             name = params["name"],
             camera = params["camera"],
             method = params["method"],
             parameters = json.loads(params["parameters"]))
             #TODO fix for different cameras
             #TODO catch malformed data
+        
+        if params.has_key('focus') and params['focus']:
+            insp, insp_id = params['focus'].split("_")
+            insp_params["parent"] = bson.objectid.ObjectId(insp_id)
+        
+        insp = Inspection(**insp_params)
         
         features = insp.execute(SimpleSeer.SimpleSeer().lastframes[-1][0].image)
         
@@ -88,12 +94,17 @@ class WebInterface(object):
     @cherrypy.expose
     @jsonify
     def inspection_add(self, **params):        
-        #try:
-        Inspection(
-            name = params["name"],
+        
+        insp_params = dict(name = params["name"],
             camera = params["camera"],
             method = params["method"],
-            parameters = json.loads(params["parameters"])).save()
+            parameters = json.loads(params["parameters"]))
+        
+        if params.has_key('focus') and params['focus']:
+            insp, insp_id = params['focus'].split("_")
+            insp_params["parent"] = bson.objectid.ObjectId(insp_id)
+        
+        Inspection(**insp_params).save()
         #except Exception as e:
         #    return dict( error = e )
         #TODO catch malformed data

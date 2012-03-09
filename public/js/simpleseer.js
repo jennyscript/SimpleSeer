@@ -710,7 +710,7 @@ SimpleSeer.Inspection.add = function(method, parameters) {
     camera = SS.framedata[0]['camera'];
     //TODO actually look up which display we're on
     
-    $.post("/inspection_add", { name: name, camera: camera, method: method, parameters: JSON.stringify(parameters)}, 
+    $.post("/inspection_add", { name: name, camera: camera, method: method, focus: SS.action.focus, parameters: JSON.stringify(parameters)}, 
         function(data) { 
             SS.inspections = data; 
             SS.Frame.refresh();
@@ -742,7 +742,7 @@ SimpleSeer.Inspection.preview = function (method, parameters) {
     
     SS.preview_queue = [];
     SS.preview_running = true;
-    $.post("/inspection_preview", { name: "preview", camera: SS.framedata[0].camera, method: method, parameters: JSON.stringify(parameters)},
+    $.post("/inspection_preview", { name: "preview", camera: SS.framedata[0].camera, focus: SS.action.focus,  method: method, parameters: JSON.stringify(parameters)},
         function(data) {   
             if ("halt" in SS.preview_data) {
                 SS.preview_data = {};
